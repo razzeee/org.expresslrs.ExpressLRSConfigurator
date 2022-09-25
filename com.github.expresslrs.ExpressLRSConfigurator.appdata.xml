@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>com.github.expresslrs.ExpressLRSConfigurator</id>
+  <name>ExpressLRS Configurator</name>
+  <project_license></project_license>
+  <developer_name></developer_name>
+  <summary>The ultimate TV and Movie Renamer</summary>
+   <description>
+  </description>
+  <launchable type="desktop-id">com.github.expresslrs.ExpressLRSConfigurator.desktop</launchable>
+  <content_rating type="oars-1.1" />
+  <metadata_license>CC0-1.0</metadata_license>
+  <screenshots>
+  </screenshots>
+  <releases>
+  </releases>
+</component>

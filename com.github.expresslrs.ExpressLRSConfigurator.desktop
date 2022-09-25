@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=ExpressLRS Configurator
+Comment=
+MimeType=inode/directory;video/*;audio/*;text/*;application/*;
+Exec=expresslrs-configurator.sh %F
+Icon=com.github.expresslrs.ExpressLRSConfigurator
+Categories=AudioVideo;Video;Utility;FileTools;
+StartupNotify=true
