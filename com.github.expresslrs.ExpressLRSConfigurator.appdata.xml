@@ -2,8 +2,8 @@
 <component type="desktop">
   <id>com.github.expresslrs.ExpressLRSConfigurator</id>
   <name>ExpressLRS Configurator</name>
-  <summary>The ultimate TV and Movie Renamer</summary>
-  <description><p>description</p></description>
+  <summary>Cross platform configuration tool for the ExpressLRS firmware</summary>
+  <description><p>Cross platform configuration tool for the ExpressLRS firmware</p></description>
   <launchable type="desktop-id">com.github.expresslrs.ExpressLRSConfigurator.desktop</launchable>
   <content_rating type="oars-1.1" />
   <metadata_license>CC0-1.0</metadata_license>
