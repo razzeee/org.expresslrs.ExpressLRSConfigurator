@@ -58,9 +58,9 @@ modules:
       - tar xf data.tar.xz
       - cp -r 'opt/ExpressLRS Configurator' '/app/ExpressLRS-Configurator'
       - mkdir -p /app/share/icons/hicolor
-      - cp -r usr/share/icons/hicolor/* /app/share/icons/hicolor
       - chmod -R a-s,go+rX,go-w "/app/ExpressLRS-Configurator"
       - install expresslrs-configurator.sh /app/bin/expresslrs-configurator
+      - install -Dm644 expresslrs-configurator.png /app/share/icons/hicolor/scalable/apps/com.github.expresslrs.ExpressLRSConfigurator.png
       - install -Dm644 com.github.expresslrs.ExpressLRSConfigurator.desktop /app/share/applications/com.github.expresslrs.ExpressLRSConfigurator.desktop
       - install -Dm644 com.github.expresslrs.ExpressLRSConfigurator.appdata.xml /app/share/metainfo/com.github.expresslrs.ExpressLRSConfigurator.metainfo.xml
     sources:
@@ -75,3 +75,5 @@ modules:
         path: com.github.expresslrs.ExpressLRSConfigurator.desktop
       - type: file
         path: com.github.expresslrs.ExpressLRSConfigurator.appdata.xml
+      - type: file
+        path: expresslrs-configurator.png
