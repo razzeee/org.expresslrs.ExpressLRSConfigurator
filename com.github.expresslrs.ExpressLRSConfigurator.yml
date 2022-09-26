@@ -6,56 +6,72 @@ base: org.electronjs.Electron2.BaseApp
 base-version: "22.08"
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node16
-command: run.sh
+command: expresslrs-configurator
 separate-locales: false
+# rename-desktop-file: expresslrs-configurator.desktop
+# rename-icon: expresslrs-configurator
+# copy-icon: true
 finish-args:
   - --share=ipc
   - --socket=x11
   - --socket=pulseaudio
   - --share=network
-build-options:
-  # Add the node bin directory & yarn directory.
-  append-path: /usr/lib/sdk/node16/bin:/app/yarn/bin:/run/build/github-desktop/flatpak-node/chromedriver
-  env:
-    NPM_CONFIG_LOGLEVEL: info
+  - --device=all
+# cleanup:
+#   - /include
+#   - /lib/pkgconfig
+#   - /lib/*.la
+#   - /lib/*.a
+#   - /share/pkgconfig
+#   - /share/aclocal
+#   - /share/gtk-doc
+#   - /share/doc
+#   - /share/info
+#   - /share/man
+#   - /man
 modules:
-  - name: expresslrs-configurator
-    buildsystem: simple
-    build-options:
-      env:
-        # Sets the directory where Node is located so way npm won't download the headers.
-        npm_config_nodedir: /usr/lib/sdk/node16
-        # Set the Electron cache directory.
-        ELECTRON_CACHE: /run/build/github-desktop/flatpak-node/electron-cache
-        # Skip Electron related downloads
-        ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
-        OFFLINE: "1"
-        CHROMEDRIVER_SKIP_DOWNLOAD: "true"
-        # Use predownloaded dugite-native
-        TMPDIR: /run/build/github-desktop/flatpak-node/tmp
-        XDG_CACHE_HOME: /run/build/github-desktop/flatpak-node/cache
-    build-commands:
-      - HOME=$PWD yarn config --offline set yarn-offline-mirror
-        $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
-      - yarn --offline --verbose
-      # Run electron-builder, passing the architecture arguments to it.
-      - . flatpak-node/electron-builder-arch-args.sh; yarn
-        run --offline package $ELECTRON_BUILDER_ARCH_ARGS
-      # Bundle app and dependencies
-      - cp -a dist/linux*unpacked /app/main
-      # Install app wrapper
-      - install -Dm755 -t /app/bin/ ../run.sh
-    subdir: main
+  - name: git
+    make-args:
+      - INSTALL_SYMLINKS=1
+      - NO_PERL=YesPlease
+      - NO_TCLTK=YesPlease
+    make-install-args:
+      - INSTALL_SYMLINKS=1
+      - NO_PERL=YesPlease
+      - NO_TCLTK=YesPlease
+    post-install:
+      - find . -type f -name perllocal.pod -delete
     sources:
       - type: archive
-        url: https://github.com/ExpressLRS/ExpressLRS-Configurator/archive/refs/tags/v1.5.0.tar.gz
-        sha256: 244c46b4a57d7869b0896679d4ba312457814a5d6505790585bcfbfa9c9c557d
-      - type: dir
-        path: ..
-        dest: main
-      - generated-sources.json
-      # Wrapper to launch the app
-      - type: script
-        dest-filename: run.sh
-        commands:
-          - zypak-wrapper.sh /app/main/expresslrs-configurator "$@"
+        sha256: 814641d7f61659cfbc17825d0462499ca1403e39ff53d76a8512050e6483e87a
+        url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.37.3.tar.xz
+        x-checker-data:
+          type: html
+          url: https://mirrors.edge.kernel.org/pub/software/scm/git/
+          version-pattern: git-([\d\.-]+).tar.xz
+          url-template: https://mirrors.edge.kernel.org/pub/software/scm/git/git-$version.tar.xz
+  - name: expresslrs-configurator
+    buildsystem: simple
+    build-commands:
+      - ar x expresslrs-configurator_*.deb
+      - rm expresslrs-configurator_*.deb
+      - tar xf data.tar.xz
+      - cp -r 'opt/ExpressLRS Configurator' '/app/ExpressLRS-Configurator'
+      - mkdir -p /app/share/icons/hicolor
+      - cp -r usr/share/icons/hicolor/* /app/share/icons/hicolor
+      - chmod -R a-s,go+rX,go-w "/app/ExpressLRS-Configurator"
+      - install expresslrs-configurator.sh /app/bin/expresslrs-configurator
+      - install -Dm644 com.github.expresslrs.ExpressLRSConfigurator.desktop /app/share/applications/com.github.expresslrs.ExpressLRSConfigurator.desktop
+      - install -Dm644 com.github.expresslrs.ExpressLRSConfigurator.appdata.xml /app/share/metainfo/com.github.expresslrs.ExpressLRSConfigurator.metainfo.xml
+    sources:
+      - type: file
+        only-arches:
+          - x86_64
+        url: https://github.com/ExpressLRS/ExpressLRS-Configurator/releases/download/v1.5.0/expresslrs-configurator_1.5.0_amd64.deb
+        sha256: aaed239c5334a4c7ad7c3471cce00af6a5aeada3507a4beaa9354d5240c35721
+      - type: file
+        path: expresslrs-configurator.sh
+      - type: file
+        path: com.github.expresslrs.ExpressLRSConfigurator.desktop
+      - type: file
+        path: com.github.expresslrs.ExpressLRSConfigurator.appdata.xml

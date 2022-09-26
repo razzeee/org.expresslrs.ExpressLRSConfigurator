@@ -1,9 +1,9 @@
 [Desktop Entry]
-Type=Application
 Name=ExpressLRS Configurator
-Comment=
-MimeType=inode/directory;video/*;audio/*;text/*;application/*;
-Exec=expresslrs-configurator.sh %F
-Icon=com.github.expresslrs.ExpressLRSConfigurator
-Categories=AudioVideo;Video;Utility;FileTools;
-StartupNotify=true
+Exec="expresslrs-configurator" %U
+Terminal=false
+Type=Application
+Icon=expresslrs-configurator
+StartupWMClass=ExpressLRS Configurator
+Comment=Cross platform configuration tool for the ExpressLRS firmware
+Categories=Development;
