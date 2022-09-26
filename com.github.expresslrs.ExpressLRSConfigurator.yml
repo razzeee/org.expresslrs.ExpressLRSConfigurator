@@ -17,6 +17,8 @@ finish-args:
   - --socket=pulseaudio
   - --share=network
   - --device=all
+  - --socket=system-bus
+  - --filesystem=/tmp
 # cleanup:
 #   - /include
 #   - /lib/pkgconfig
