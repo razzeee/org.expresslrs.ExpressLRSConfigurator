@@ -19,6 +19,8 @@ finish-args:
   - --device=all
   - --socket=system-bus
   - --filesystem=/tmp
+  - --filesystem=/run/udev:ro
+  - --filesystem=~/.platformio
 # cleanup:
 #   - /include
 #   - /lib/pkgconfig
@@ -69,6 +71,7 @@ modules:
       - type: file
         only-arches:
           - x86_64
+        # path: expresslrs-configurator_1.5.0_amd64.deb
         url: https://github.com/ExpressLRS/ExpressLRS-Configurator/releases/download/v1.5.0/expresslrs-configurator_1.5.0_amd64.deb
         sha256: aaed239c5334a4c7ad7c3471cce00af6a5aeada3507a4beaa9354d5240c35721
       - type: file
